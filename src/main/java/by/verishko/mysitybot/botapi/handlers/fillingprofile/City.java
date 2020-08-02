@@ -6,11 +6,13 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
+
 /**
  * Данные города
  */
-@Entity
+
 @Data
+@Entity
 @Table(name = "city")
 public class City {
     @Id

@@ -26,9 +26,11 @@
         </dependency>
         <dependency>
             <groupId>org.telegram</groupId>
-            <artifactId>telegrambots-spring-boot-starter</artifactId>
-            <version>4.3</version>
+            <artifactId>telegrambots</artifactId>
+            <version>4.9</version>
         </dependency>
+
+
 
         <!-- DataBase support -->
         <dependency>
