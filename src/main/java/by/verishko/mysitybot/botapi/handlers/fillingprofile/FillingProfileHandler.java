@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 public class FillingProfileHandler implements InputMessageHandler {
     private UserDataCache userDataCache;
     private ReplyMessagesService messagesService;
-    private CityService cityService;
 
     public FillingProfileHandler(UserDataCache userDataCache,
                                  ReplyMessagesService messagesService) {
@@ -34,39 +33,10 @@ public class FillingProfileHandler implements InputMessageHandler {
 
     @Override
     public SendMessage handle(Message message) {
-/*        if (userDataCache.getUsersCurrentBotState(message.getFrom().getId()).equals(BotState.SEARСH_PROFILE)){
-            Long chatId = message.getChatId();
-            String city = message.getText();
-            List<City> citiesDB = cityService.getNameInList(city);
-            if (citiesDB.size() > 1) {
-                return messagesService.getReplyMessage(chatId, specifyRequest(citiesDB));
-            }
-            else if (citiesDB.size() == 1) {
-                return getInlineKeyboard(chatId, googlePlayGames.get(0));
-            }
-            else {
-                log.error("Game {} doesn't exist in library", title);
-                return replyMessageService.getTextMessage(chatId, "Такой игры в библиотеке нет!");
-            }
-        }*/
-
         if (userDataCache.getUsersCurrentBotState(message.getFrom().getId()).equals(BotState.FILLING_PROFILE)) {
             userDataCache.setUsersCurrentBotState(message.getFrom().getId(), BotState.ASK_NAMECITY);
         }
         return processUsersInput(message);
-    }
-
-    private String specifyRequest(List<City> cityes) {
-        return String.join("\n\n"
-                , "Найденные совпадения:"
-                , getCityesNames(cityes)
-                , "Уточните ваш запрос!");
-    }
-
-    private String getCityesNames(List<City> cityes) {
-        return cityes.stream()
-                .map(City::getName)
-                .collect(Collectors.joining("\n"));
     }
 
     @Override
@@ -102,6 +72,7 @@ public class FillingProfileHandler implements InputMessageHandler {
         }
 
         userDataCache.saveCityesProfileData(userId, profileData);
+
         return replyToUser;
     }
 }

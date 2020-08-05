@@ -18,4 +18,8 @@ public class CityService {
     public List<City> getNameInList(String city){
         return cityRepo.findByNameContainsIgnoreCase(city);
     }
+
+    public List<City> findAll(){
+        return cityRepo.findAll();
+    }
 }
